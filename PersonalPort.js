@@ -69,21 +69,18 @@ document.addEventListener('DOMContentLoaded', () => {
  });
     
  // --- Toggle Mode Here ---
-  const USE_AJAX = true; // ✅ true = show popup, false = redirect to thankyou.html
+   const form = document.getElementById("contact-form");
+const thankYou = document.getElementById("thank-you");
 
-  const form = document.getElementById("contact-form");
-  const thankYou = document.getElementById("thank-you");
+form.addEventListener("submit", function(e) {
+  e.preventDefault(); // prevent default submission
 
-  if (USE_AJAX) {
-    form.addEventListener("submit", function(event) {
-      event.preventDefault();
-      const formData = new FormData(form);
+  const formData = new FormData(form); // grabs all fields correctly
 
-      fetch("/", { method: "POST", body: formData })
-        .then(() => {
-          form.style.display = "none";
-          thankYou.style.display = "block";
-        })
-        .catch(error => alert("Oops! Something went wrong: " + error));
-    });
-  }
+  fetch("/", { method: "POST", body: formData })
+    .then(() => {
+      form.style.display = "none";
+      thankYou.style.display = "block";
+    })
+    .catch(err => alert("Oops! Something went wrong: " + err));
+});
